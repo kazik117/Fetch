@@ -69,7 +69,7 @@ public class FileServerActivity extends AppCompatActivity {
     }
 
     private void checkStoragePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&  Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         } else {
             copyRawFileToFilesDir();
@@ -181,7 +181,7 @@ public class FileServerActivity extends AppCompatActivity {
         fetchFileServer.shutDown(false);
     }
 
-    private FetchListener fetchListener = new AbstractFetchListener() {
+    private final FetchListener fetchListener = new AbstractFetchListener() {
 
         @Override
         public void onCompleted(@NotNull Download download) {
@@ -208,6 +208,7 @@ public class FileServerActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             copyRawFileToFilesDir();
         } else {
