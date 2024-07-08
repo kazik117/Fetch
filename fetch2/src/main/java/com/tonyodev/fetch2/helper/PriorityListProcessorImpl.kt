@@ -2,7 +2,6 @@ package com.tonyodev.fetch2.helper
 
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.RECEIVER_NOT_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
@@ -74,7 +73,7 @@ class PriorityListProcessorImpl constructor(private val handlerWrapper: HandlerW
             context.registerReceiver(
                 priorityBackoffResetReceiver,
                 IntentFilter(ACTION_QUEUE_BACKOFF_RESET),
-                Context.RECEIVER_EXPORTED
+                Context.RECEIVER_NOT_EXPORTED
             )
         } else {
             context.registerReceiver(
